@@ -31,11 +31,62 @@ struct TodoItem: Identifiable, Codable, Equatable {
     var createdAt: Date  = Date()
 }
 
-struct TodoList: Identifiable, Codable {
+struct TodoSection: Identifiable, Codable {
     var id    = UUID()
-    var name:  String
-    var icon:  String     = ""
+    var name: String
     var items: [TodoItem] = []
+
+    private enum CodingKeys: String, CodingKey { case id, name, items }
+
+    init(name: String, items: [TodoItem] = []) { self.name = name; self.items = items }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id    = (try? c.decode(UUID.self,       forKey: .id))    ?? UUID()
+        name  = (try? c.decode(String.self,     forKey: .name))  ?? ""
+        items = (try? c.decode([TodoItem].self, forKey: .items)) ?? []
+    }
+}
+
+struct TodoList: Identifiable, Codable {
+    var id       = UUID()
+    var name:    String
+    var icon:    String         = ""
+    var color:   String         = ""
+    var sections: [TodoSection] = []
+
+    private enum CodingKeys: String, CodingKey { case id, name, icon, color, sections }
+    private enum LegacyCodingKeys: String, CodingKey { case items }
+
+    init(name: String) { self.name = name; self.sections = [TodoSection(name: "")] }
+
+    init(from decoder: Decoder) throws {
+        let c  = try  decoder.container(keyedBy: CodingKeys.self)
+        let lc = try? decoder.container(keyedBy: LegacyCodingKeys.self)
+        id    = (try? c.decode(UUID.self,   forKey: .id))    ?? UUID()
+        name  = try  c.decode(String.self,  forKey: .name)
+        icon  = (try? c.decode(String.self, forKey: .icon))  ?? ""
+        color = (try? c.decode(String.self, forKey: .color)) ?? ""
+        if let legacyItems = try? lc?.decode([TodoItem].self, forKey: .items) {
+            sections = [TodoSection(name: "", items: legacyItems)]
+        } else {
+            let decoded = (try? c.decode([TodoSection].self, forKey: .sections)) ?? []
+            sections = decoded.isEmpty ? [TodoSection(name: "")] : decoded
+        }
+    }
+
+    // Convenience: all items across sections (for CLI display/numbering)
+    var allItems: [TodoItem] { sections.flatMap { $0.items } }
+
+    // Find the section and within-section index for a flat item number (1-based)
+    func sectionAndIndex(for number: Int) -> (secIdx: Int, itemIdx: Int)? {
+        var n = number - 1
+        for (si, sec) in sections.enumerated() {
+            if n < sec.items.count { return (si, n) }
+            n -= sec.items.count
+        }
+        return nil
+    }
 }
 
 enum DisplayMode: String, Codable {
@@ -111,52 +162,53 @@ final class Store {
     func addItem(_ text: String) {
         guard let id  = data.selectedListID,
               let idx = data.lists.firstIndex(where: { $0.id == id }) else { return }
-        data.lists[idx].items.append(TodoItem(text: text))
+        if data.lists[idx].sections.isEmpty {
+            data.lists[idx].sections = [TodoSection(name: "")]
+        }
+        data.lists[idx].sections[0].items.append(TodoItem(text: text))
         save()
     }
 
-    func updateItem(at iidx: Int, text: String) {
+    func updateItem(at number: Int, text: String) {
         guard let id   = data.selectedListID,
               let lidx = data.lists.firstIndex(where: { $0.id == id }),
-              data.lists[lidx].items.indices.contains(iidx) else { return }
+              let (si, ii) = data.lists[lidx].sectionAndIndex(for: number) else { return }
         let trimmed = text.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return }
-        data.lists[lidx].items[iidx].text = trimmed
+        data.lists[lidx].sections[si].items[ii].text = trimmed
         save()
     }
 
-    func toggleDone(at iidx: Int) {
+    func toggleDone(at number: Int) {
         guard let id   = data.selectedListID,
               let lidx = data.lists.firstIndex(where: { $0.id == id }),
-              data.lists[lidx].items.indices.contains(iidx) else { return }
-        data.lists[lidx].items[iidx].isDone.toggle()
+              let (si, ii) = data.lists[lidx].sectionAndIndex(for: number + 1) else { return }
+        data.lists[lidx].sections[si].items[ii].isDone.toggle()
         save()
     }
 
     func setDone(_ number: Int, done: Bool) -> Bool {
         guard let id   = data.selectedListID,
-              let lidx = data.lists.firstIndex(where: { $0.id == id }) else { return false }
-        let iidx = number - 1
-        guard data.lists[lidx].items.indices.contains(iidx) else { return false }
-        data.lists[lidx].items[iidx].isDone = done
+              let lidx = data.lists.firstIndex(where: { $0.id == id }),
+              let (si, ii) = data.lists[lidx].sectionAndIndex(for: number) else { return false }
+        data.lists[lidx].sections[si].items[ii].isDone = done
         save()
         return true
     }
 
-    func removeItemAt(_ iidx: Int) {
+    func removeItemAt(_ number: Int) {
         guard let id   = data.selectedListID,
               let lidx = data.lists.firstIndex(where: { $0.id == id }),
-              data.lists[lidx].items.indices.contains(iidx) else { return }
-        data.lists[lidx].items.remove(at: iidx)
+              let (si, ii) = data.lists[lidx].sectionAndIndex(for: number + 1) else { return }
+        data.lists[lidx].sections[si].items.remove(at: ii)
         save()
     }
 
     func removeItem(_ number: Int) -> Bool {
         guard let id   = data.selectedListID,
-              let lidx = data.lists.firstIndex(where: { $0.id == id }) else { return false }
-        let iidx = number - 1
-        guard data.lists[lidx].items.indices.contains(iidx) else { return false }
-        data.lists[lidx].items.remove(at: iidx)
+              let lidx = data.lists.firstIndex(where: { $0.id == id }),
+              let (si, ii) = data.lists[lidx].sectionAndIndex(for: number) else { return false }
+        data.lists[lidx].sections[si].items.remove(at: ii)
         save()
         return true
     }
@@ -294,7 +346,7 @@ private struct TUI {
 
     private func render() {
         let (w, h) = termSize()
-        let items       = store.current?.items ?? []
+        let items       = store.current?.allItems ?? []
         let visibleRows = max(0, h - 4)  // header + top divider + bottom divider + status
 
         var out = "\u{1B}[H"  // cursor home
@@ -375,7 +427,7 @@ private struct TUI {
     }
 
     mutating func handleNormal(_ key: Key) -> Bool {
-        let items = store.current?.items ?? []
+        let items = store.current?.allItems ?? []
         switch key {
         case .char("q"), .escape:
             return true
@@ -425,7 +477,7 @@ private struct TUI {
         case .addItem:
             if !text.isEmpty {
                 store.addItem(text)
-                cursor = max(0, (store.current?.items.count ?? 1) - 1)
+                cursor = max(0, (store.current?.allItems.count ?? 1) - 1)
                 adjustScroll()
             }
         case .editItem:
@@ -450,7 +502,7 @@ private struct TUI {
     }
 
     mutating func clampCursor() {
-        let count = store.current?.items.count ?? 0
+        let count = store.current?.allItems.count ?? 0
         if count == 0 { cursor = 0; scroll = 0; return }
         cursor = min(cursor, count - 1)
         adjustScroll()
@@ -477,8 +529,8 @@ private func printCurrent(_ store: Store) {
     guard let list = store.current else { print("No list selected."); return }
     let icon = list.icon.isEmpty ? "" : "\(list.icon) "
     print("\(A.bold)\(A.cyan)[\(icon)\(list.name)]\(A.reset)")
-    if list.items.isEmpty { print("  \(A.dim)(empty)\(A.reset)"); return }
-    for (i, item) in list.items.enumerated() {
+    if list.allItems.isEmpty { print("  \(A.dim)(empty)\(A.reset)"); return }
+    for (i, item) in list.allItems.enumerated() {
         let num   = String(format: "%2d", i + 1)
         let mark  = item.isDone ? "\(A.green)✓\(A.reset)" : " "
         let iIcon = item.icon.isEmpty ? "" : "\(item.icon) "
@@ -492,7 +544,7 @@ private func printAll(_ store: Store) {
     for list in store.allLists {
         let arrow = list.id == sel ? "\(A.cyan)→\(A.reset)" : " "
         let icon  = list.icon.isEmpty ? "" : "\(list.icon) "
-        let count = list.items.count
+        let count = list.allItems.count
         let badge = "\(A.dim)(\(count) item\(count == 1 ? "" : "s"))\(A.reset)"
         print("  \(arrow) \(A.bold)\(icon)\(list.name)\(A.reset)  \(badge)")
     }

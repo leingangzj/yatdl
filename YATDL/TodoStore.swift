@@ -4,20 +4,18 @@
 import Foundation
 import Combine
 
-// Shared between the GUI panel and the file-watcher reload path.
 enum DisplayMode: String, Codable {
     case dropFromMenubar
     case slideFromRight
 }
 
-// Central in-process store for the GUI. Owns the published state that
-// SwiftUI views observe and is the single writer of the shared data file.
-// The CLI writes the same file; FileWatcher triggers a reload when that happens.
 final class TodoStore: ObservableObject {
-    @Published var lists:          [TodoList] = []
-    @Published var selectedListID: UUID?
-    @Published var displayMode:    DisplayMode = .dropFromMenubar
-    @Published var isPinned:       Bool = false
+    @Published var lists:               [TodoList] = []
+    @Published var selectedListID:      UUID?
+    @Published var displayMode:         DisplayMode = .dropFromMenubar
+    @Published var isPinned:            Bool = false
+    @Published var pendingEditItemID:   UUID? = nil
+    @Published var pendingRenameListID: UUID? = nil
 
     let saveURL: URL
     private var fileWatcher: FileWatcher?
@@ -28,21 +26,19 @@ final class TodoStore: ObservableObject {
         let dir = support.appendingPathComponent("YATDL")
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         saveURL = dir.appendingPathComponent("data.json")
-
         load()
-
         if lists.isEmpty {
             let list = TodoList(name: "Personal")
             lists          = [list]
             selectedListID = list.id
         }
-
         startWatching()
     }
 
     func save() {
         lastSaveDate = Date()
-        let payload = Payload(lists: lists, selectedListID: selectedListID, displayMode: displayMode)
+        let payload = Payload(lists: lists, selectedListID: selectedListID,
+                              displayMode: displayMode, isPinned: isPinned)
         if let data = try? JSONEncoder().encode(payload) {
             try? data.write(to: saveURL, options: .atomic)
         }
@@ -54,11 +50,9 @@ final class TodoStore: ObservableObject {
         lists          = payload.lists
         selectedListID = payload.selectedListID
         displayMode    = payload.displayMode
+        isPinned       = payload.isPinned
     }
 
-    // Skips reloads triggered by our own writes using a 250 ms grace window.
-    // Without this, every GUI save would bounce back through the file watcher
-    // and clobber any in-progress text field edits.
     private func startWatching() {
         fileWatcher = FileWatcher(url: saveURL)
         fileWatcher?.onChange = { [weak self] in
@@ -73,5 +67,25 @@ final class TodoStore: ObservableObject {
         var lists:          [TodoList]
         var selectedListID: UUID?
         var displayMode:    DisplayMode
+        var isPinned:       Bool
+
+        private enum CodingKeys: String, CodingKey {
+            case lists, selectedListID, displayMode, isPinned
+        }
+
+        init(lists: [TodoList], selectedListID: UUID?, displayMode: DisplayMode, isPinned: Bool) {
+            self.lists          = lists
+            self.selectedListID = selectedListID
+            self.displayMode    = displayMode
+            self.isPinned       = isPinned
+        }
+
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            lists          = (try? c.decode([TodoList].self,   forKey: .lists))          ?? []
+            selectedListID = try? c.decode(UUID.self,          forKey: .selectedListID)
+            displayMode    = (try? c.decode(DisplayMode.self,  forKey: .displayMode))    ?? .dropFromMenubar
+            isPinned       = (try? c.decode(Bool.self,         forKey: .isPinned))       ?? false
+        }
     }
 }

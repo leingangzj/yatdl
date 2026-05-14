@@ -4,6 +4,7 @@
 APP_SRC = \
 	YATDL/YATDLApp.swift \
 	YATDL/AppDelegate.swift \
+	YATDL/AppSettings.swift \
 	YATDL/TodoItem.swift \
 	YATDL/TodoList.swift \
 	YATDL/TodoStore.swift \
@@ -15,7 +16,8 @@ APP_SRC = \
 	YATDL/EmojiPickerView.swift \
 	YATDL/TabBarView.swift \
 	YATDL/TodoListView.swift \
-	YATDL/BottomToolbarView.swift
+	YATDL/BottomToolbarView.swift \
+	YATDL/SettingsView.swift
 
 APP_FRAMEWORKS = \
 	-framework AppKit \

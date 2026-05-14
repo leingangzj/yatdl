@@ -6,37 +6,67 @@ import SwiftUI
 struct EmojiPickerView: View {
     let onSelect: (String) -> Void
 
+    private let columns = Array(repeating: GridItem(.fixed(40), spacing: 4), count: 6)
+
     private let emojis = [
-        "📋","📝","🏠","💼","🛒","🎯","💡","📚",
-        "🏋️","🎮","🌟","⭐","🔴","🟡","🟢","🔵",
-        "✅","📌","🔥","⚡","🚀","📎","💊","🍎",
-        "🏃","📞","💻","🎵","🎨","🔧","📅","🌈",
+        // Work & productivity
+        "📋","📝","📌","📎","🗂️","📁","📅","🗓️",
+        "💼","🖥️","💻","⌨️","🖱️","📱","☎️","📞",
+        "📧","📨","📩","✉️","📮","📬","📤","📥",
+        // Learning & ideas
+        "📚","📖","🎓","💡","🔬","🔭","🧪","🧠",
+        // Personal & home
+        "🏠","🏡","🛋️","🍽️","🛒","🧹","🔑","🪴",
+        // Health & fitness
+        "🏋️","🏃","🧘","💊","🩺","🥗","💪","🚴",
+        // Finance
+        "💰","💳","💵","📈","📉","🏦","🤑","💹",
+        // Creative
+        "🎨","✏️","🖊️","📷","🎬","🎵","🎸","🎤",
+        // Travel & places
+        "✈️","🚗","🚂","🏖️","🗺️","📍","🏔️","🌍",
+        // Food
+        "☕","🍕","🍔","🍜","🍎","🥑","🍰","🥂",
+        // Nature & weather
+        "🌟","⭐","🌈","☀️","🌙","❄️","🌿","🌸",
+        // Symbols & flags
+        "🔴","🟠","🟡","🟢","🔵","🟣","⚫","⚪",
+        "✅","❌","⚠️","🔥","⚡","🚀","🎯","🏆",
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("Icon")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(.secondary)
+                Text("Choose Icon")
+                    .font(.system(size: 12, weight: .semibold))
                 Spacer()
-                Button("None") { onSelect("") }
+                Button("Remove") { onSelect("") }
                     .font(.system(size: 11))
                     .buttonStyle(.plain)
                     .foregroundStyle(.secondary)
             }
 
-            LazyVGrid(columns: Array(repeating: GridItem(.fixed(30)), count: 8), spacing: 2) {
-                ForEach(emojis, id: \.self) { emoji in
-                    Button(emoji) { onSelect(emoji) }
-                        .font(.system(size: 18))
+            ScrollView(.vertical, showsIndicators: true) {
+                LazyVGrid(columns: columns, spacing: 4) {
+                    ForEach(emojis, id: \.self) { emoji in
+                        Button {
+                            onSelect(emoji)
+                        } label: {
+                            Text(emoji)
+                                .font(.system(size: 22))
+                                .frame(width: 40, height: 40)
+                                .background(Color.primary.opacity(0.05),
+                                            in: RoundedRectangle(cornerRadius: 6))
+                        }
                         .buttonStyle(.plain)
-                        .frame(width: 30, height: 30)
                         .contentShape(Rectangle())
+                    }
                 }
+                .padding(.bottom, 4)
             }
+            .frame(height: 240)
         }
-        .padding(10)
-        .frame(width: 272)
+        .padding(12)
+        .frame(width: 296)
     }
 }

@@ -22,16 +22,6 @@ struct BottomToolbarView: View {
 
             Spacer()
 
-            if store.lists.count > 1 {
-                Button(action: deleteList) {
-                    Image(systemName: "trash")
-                        .font(.system(size: 12))
-                        .foregroundStyle(.secondary)
-                }
-                .buttonStyle(.plain)
-                .help("Delete this list")
-            }
-
             // isPinned is not persisted — it intentionally resets on relaunch
             Button(action: { store.isPinned.toggle() }) {
                 Image(systemName: store.isPinned ? "pin.fill" : "pin")
@@ -50,12 +40,4 @@ struct BottomToolbarView: View {
         store.save()
     }
 
-    private func deleteList() {
-        guard store.lists.count > 1,
-              let id  = store.selectedListID,
-              let idx = store.lists.firstIndex(where: { $0.id == id }) else { return }
-        store.lists.remove(at: idx)
-        store.selectedListID = store.lists[max(0, idx - 1)].id
-        store.save()
-    }
 }
