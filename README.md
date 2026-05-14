@@ -1,8 +1,50 @@
 # YATDL — Yet Another To-Do List
 
-A lightweight, native macOS menubar to-do app with a companion CLI. Built with SwiftUI + AppKit, arm64 native, targeting macOS 14+. No Xcode required to build.
+A lightweight, native macOS menubar to-do app with a full-screen terminal TUI companion. Built with SwiftUI + AppKit, arm64 native, targeting macOS 14+.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+---
+
+## Install
+
+Download **YATDL.dmg** from [Releases](https://github.com/leingangzj/yatdl/releases), open it, and drag YATDL into Applications.
+
+To install the `yatdl` CLI tool, open the app → right-click the menubar icon → **Settings → Install CLI Tool…** — macOS will ask for your password once.
+
+---
+
+## Desktop App
+
+### Drop-down panel
+
+The panel drops directly below the menubar icon. Click the bolt icon or press **Option+Space** from anywhere.
+
+![Drop-down panel](screenshots/gui-dropdown.png)
+
+### Slide-in panel
+
+Switch to slide-in mode from the bottom toolbar. The panel glides in from the right edge and nudges your windows aside. Hovering near the right edge opens it automatically.
+
+![Slide-in panel](screenshots/gui-slidein.png)
+
+### Multiple lists and sections
+
+Up to three lists (tabs), each divided into named sections. Tabs fill the panel width evenly and can be reordered by dragging.
+
+![Tabs and sections](screenshots/gui-tabs-sections.png)
+
+### Sections with emoji icons
+
+Each item can carry an emoji icon. Sections show a green ✓ and strikethrough when every item in them is done.
+
+![Work list with sections](screenshots/gui-worklist.png)
+
+### Settings
+
+Control appearance, font sizes, tab position, launch at login, CLI install, and CSV export.
+
+![Settings](screenshots/gui-settings.png)
 
 ---
 
@@ -12,35 +54,34 @@ A lightweight, native macOS menubar to-do app with a companion CLI. Built with S
 
 | Feature | Detail |
 |---|---|
-| **Menubar-only** | Runs entirely from the menu bar — no Dock icon, no Cmd+Tab entry |
-| **Global hotkey** | **Option+Space** opens or closes the panel from anywhere |
-| **Drop-down mode** | Panel drops down directly below the menubar icon |
-| **Slide-in mode** | Panel slides in from the right edge and nudges open windows aside |
-| **Hot-edge hover** | In slide-in mode, hovering near the right edge opens the panel without clicking |
-| **Mode toggle** | Switch between drop-down and slide-in from the bottom toolbar |
+| **Menubar-only** | No Dock icon, no Cmd+Tab entry |
+| **Global hotkey** | Option+Space opens or closes the panel from anywhere |
+| **Drop-down mode** | Panel drops below the menubar icon |
+| **Slide-in mode** | Panel slides in from the right edge and nudges windows aside |
+| **Hot-edge hover** | In slide-in mode, hovering near the right edge opens the panel |
 | **Pin mode** | Keep the panel open regardless of outside clicks |
-| **Appearance** | System, Light, or Dark mode — switchable in Settings |
+| **Appearance** | System, Light, or Dark — switchable in Settings |
 
 ### Lists (Tabs)
 
 | Feature | Detail |
 |---|---|
-| **Up to 3 lists** | Create up to three named lists (tabs); tabs fill the bar width evenly |
-| **Tab positions** | Top, Bottom, or Left sidebar — switchable in Settings |
-| **Inline create** | Click **Add Tab** to create a new list and immediately rename it in place |
+| **Up to 3 lists** | Create up to three named lists |
+| **Dynamic width** | Tabs fill the panel width evenly |
+| **Tab positions** | Top, Bottom, or Left sidebar |
+| **Inline create** | Click Add Tab — name it immediately in place |
 | **Rename** | Double-click or right-click → Rename |
-| **Icons** | Right-click → Set Icon to assign an emoji to any tab |
-| **Drag to reorder** | Drag tabs to rearrange their order |
-| **Delete with confirmation** | Right-click → Delete List shows a confirmation before removing |
+| **Icons** | Right-click → Set Icon to assign an emoji |
+| **Drag to reorder** | Drag tabs to rearrange |
+| **Delete with confirmation** | Right-click → Delete List shows a confirmation |
 
 ### Sections
 
 | Feature | Detail |
 |---|---|
-| **Sections within lists** | Divide any list into named sections |
-| **Inline create** | Click **Add Section** to add a section at the bottom with inline rename |
-| **Rename** | Double-click or right-click → Rename |
-| **Completion indicator** | Green ✓ and strikethrough on a section header when all its items are done |
+| **Named sections** | Divide any list into sections |
+| **Inline create** | Click Add Section — name it immediately in place |
+| **Completion indicator** | Green ✓ and strikethrough when all items are done |
 | **Drag to reorder** | Drag section headers above, below, or between items |
 | **Delete** | Right-click → Delete Section; orphaned items fold into the first section |
 
@@ -48,12 +89,12 @@ A lightweight, native macOS menubar to-do app with a companion CLI. Built with S
 
 | Feature | Detail |
 |---|---|
-| **Inline create** | Click **Add Item** to add a blank item at the bottom and immediately edit it |
+| **Inline create** | Click Add Item — edit it immediately in place |
 | **Check/uncheck** | Click the circle to toggle done; strikethrough applied automatically |
-| **Inline edit** | Double-click any item to edit it in place |
-| **Click-away saves** | Clicking anywhere outside an active edit field commits the change |
-| **Icons** | Hover a row and click the smiley to assign an emoji icon |
-| **URL items** | Paste any `http://` or `https://` URL — single-click opens it in your default browser |
+| **Inline edit** | Double-click any item to edit in place |
+| **Click-away saves** | Clicking anywhere outside an active edit commits the change |
+| **Icons** | Hover a row and click the smiley to assign an emoji |
+| **URL items** | Paste any http/https URL — single-click opens it in your browser |
 | **Delete** | Hover a row to reveal the × button |
 | **Drag to reorder** | Drag items within or between sections |
 
@@ -62,83 +103,99 @@ A lightweight, native macOS menubar to-do app with a companion CLI. Built with S
 | Feature | Detail |
 |---|---|
 | **Font size** | Adjustable item font size (11–20 pt) with live preview |
-| **Section font size** | Separate size control for section headers (9–16 pt) |
+| **Section font size** | Separate size for section headers (9–16 pt) |
 | **Appearance** | System / Light / Dark |
 | **Tab position** | Top / Left / Bottom |
-| **Launch at Login** | Registers with `SMAppService` — no login items kludge |
-| **CSV export** | Export the current list or all lists to a CSV with List, Section, Item, Done, and Created At columns |
+| **Launch at Login** | Registered with SMAppService |
+| **Install CLI Tool** | One-click install of the `yatdl` CLI with a native password prompt |
+| **CSV export** | Export current or all lists with List, Section, Item, Done, and Created At columns |
 
-### CLI (`yatdl`)
+---
+
+## Terminal TUI
+
+`yatdl -i` launches a full-screen terminal interface that reads and writes the same data file as the GUI — changes sync within milliseconds in both directions.
+
+### Personal list with sections
+
+![TUI personal list](screenshots/tui-personal.png)
+
+### Work list with multiple sections
+
+![TUI work list](screenshots/tui-work.png)
+
+### One-shot commands
 
 ```
-yatdl                 show current list
-yatdl lists           show all lists
-yatdl use <name>      switch to a list
-yatdl add <text>      add item to current list
-yatdl done <num>      mark item done
-yatdl undo <num>      mark item not done
-yatdl rm <num>        remove item
-yatdl newtab <name>   create a new list
-yatdl rmtab <name>    delete a list
-yatdl -i              interactive REPL with ANSI colour
-yatdl help            show help
+yatdl                  show current list
+yatdl lists            show all lists
+yatdl use <name>       switch to a list
+yatdl add <text>       add item to current list
+yatdl done <num>       mark item done
+yatdl undo <num>       mark item not done
+yatdl rm <num>         remove item
+yatdl newtab <name>    create a new list
+yatdl rmtab <name>     delete a list
+yatdl -i               launch full-screen TUI
+yatdl help             show help
 ```
 
-### Bidirectional Sync
+### TUI keys — on an item
 
-Both the app and CLI read and write the same file:
+| Key | Action |
+|---|---|
+| ↑ ↓ / j k | navigate |
+| Space | toggle done |
+| `a` | add item |
+| `e` | edit item text |
+| `i` | set emoji icon (blank to clear) |
+| `d` | delete item |
+| `s` | add section |
+| Tab / → | next list |
+| Shift+Tab / ← | previous list |
+| `n` | new list |
+| q / Esc | quit |
+
+### TUI keys — on a section header
+
+| Key | Action |
+|---|---|
+| ↑ ↓ / j k | navigate |
+| `r` | rename section |
+| `d` | delete section |
+| `s` | add section |
+| Tab / → | next list |
+| q / Esc | quit |
+
+---
+
+## Bidirectional Sync
+
+Both the app and CLI read and write:
 
 ```
 ~/Library/Application Support/YATDL/data.json
 ```
 
-The GUI watches that file with a **kqueue-backed DispatchSource** (no polling, no FSEvents overhead). Any change made in the CLI appears in the GUI within milliseconds.
+The GUI watches that file with a **kqueue-backed DispatchSource** (no polling). Any change made in the CLI appears in the GUI within milliseconds.
 
 ---
 
-## Requirements
+## Build from Source
 
-- macOS 14.0 (Sonoma) or later
-- Apple Silicon (arm64)
-- Swift toolchain (Xcode Command Line Tools — `xcode-select --install`)
-
----
-
-## Build
-
-### GUI App
+> Requires Swift toolchain: `xcode-select --install`
 
 ```bash
-make app
+# GUI app
+make app          # builds .build/YATDL.app
+make install-app  # installs to /Applications
+
+# CLI
+make install      # builds and installs yatdl to /usr/local/bin
+
+# Distributable DMG
+make dmg          # produces .build/YATDL.dmg
 ```
-
-Compiles all Swift sources with `swiftc` and produces `.build/YATDL.app`.
-
-To install to `/Applications`:
-
-```bash
-make install-app
-```
-
-### CLI
-
-```bash
-make install
-```
-
-Compiles `cli/main.swift` and installs it to `/usr/local/bin/yatdl`.
-
-### Clean
-
-```bash
-make clean
-```
-
----
-
-## Hotkey
-
-The global hotkey is **Option+Space**, registered via the Carbon Event Manager (`RegisterEventHotKey`). This predates the Input Monitoring permission system — no special entitlement or user approval required.
 
 ---
 
@@ -154,15 +211,10 @@ The global hotkey is **Option+Space**, registered via the Carbon Event Manager (
       "sections": [
         {
           "id": "…",
-          "name": "",
+          "name": "Morning",
           "items": [
-            { "id": "…", "text": "Buy groceries", "icon": "", "isDone": false, "createdAt": "…" }
+            { "id": "…", "text": "Drop off kids", "icon": "🚗", "isDone": false, "createdAt": "…" }
           ]
-        },
-        {
-          "id": "…",
-          "name": "Someday",
-          "items": []
         }
       ]
     }
@@ -173,37 +225,12 @@ The global hotkey is **Option+Space**, registered via the Carbon Event Manager (
 }
 ```
 
-Written atomically on every mutation. Backward-compatible with the original flat `items` format.
-
 ---
 
-## Project Structure
+## Requirements
 
-```
-YATDL/
-  YATDLApp.swift          App entry point (@main, SwiftUI lifecycle)
-  AppDelegate.swift       NSStatusItem, hotkey, panel lifecycle, settings window
-  AppSettings.swift       Persisted preferences (UserDefaults)
-  PanelController.swift   NSPanel management, positioning, hot-edge hover
-  HotkeyManager.swift     Carbon RegisterEventHotKey wrapper
-  PanelAction.swift       EnvironmentObject bridge for Escape-to-close
-  TodoStore.swift         ObservableObject — state, persistence, file watcher
-  FileWatcher.swift       kqueue DispatchSource watching data.json
-  TodoItem.swift          Item model
-  TodoList.swift          List + Section models with legacy migration
-  ContentView.swift       Root SwiftUI view; tab-position layout switch
-  TabBarView.swift        Horizontal and vertical tab bars + chip views
-  TodoListView.swift      Scroll view, section blocks, item rows
-  BottomToolbarView.swift Display-mode toggle and pin button
-  EmojiPickerView.swift   Emoji icon picker popover
-  SettingsView.swift      Settings panel with CSV export
-  Info.plist              LSUIElement=YES, bundle metadata
-  AppIcon.icns            App icon
-cli/
-  main.swift              Self-contained CLI (no shared framework)
-Makefile                  make app / cli / install-app / install / clean
-LICENSE                   MIT License
-```
+- macOS 14.0 (Sonoma) or later
+- Apple Silicon (arm64)
 
 ---
 

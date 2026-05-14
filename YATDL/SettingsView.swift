@@ -10,6 +10,28 @@ struct SettingsView: View {
     @EnvironmentObject var settings: AppSettings
     @EnvironmentObject var store:    TodoStore
 
+    @State private var cliStatus: CLIStatus = .unknown
+
+    enum CLIStatus {
+        case unknown, installed, notInstalled, installing, failed
+        var label: String {
+            switch self {
+            case .unknown:      return "Checking…"
+            case .installed:    return "Installed ✓"
+            case .notInstalled: return "Not installed"
+            case .installing:   return "Installing…"
+            case .failed:       return "Failed — check permissions"
+            }
+        }
+        var color: Color {
+            switch self {
+            case .installed: return .green
+            case .failed:    return .red
+            default:         return .secondary
+            }
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
 
@@ -94,6 +116,26 @@ struct SettingsView: View {
                 .padding(10)
             }
 
+            // ── CLI ─────────────────────────────────────────────────────────
+            GroupBox("Command-Line Tool") {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Installs `yatdl` to /usr/local/bin — use the CLI and TUI from any terminal.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
+
+                    HStack(spacing: 12) {
+                        Button("Install CLI Tool…") { installCLI() }
+                            .disabled(cliStatus == .installing)
+
+                        Text(cliStatus.label)
+                            .font(.system(size: 11))
+                            .foregroundStyle(cliStatus.color)
+                    }
+                }
+                .padding(10)
+            }
+            .onAppear { checkCLI() }
+
             // ── Export ──────────────────────────────────────────────────────
             GroupBox("Export to CSV") {
                 VStack(alignment: .leading, spacing: 8) {
@@ -113,6 +155,29 @@ struct SettingsView: View {
         }
         .padding(16)
         .frame(width: 400, alignment: .topLeading)
+    }
+
+    // MARK: – CLI install
+
+    private func checkCLI() {
+        let installed = FileManager.default.fileExists(atPath: "/usr/local/bin/yatdl")
+        cliStatus = installed ? .installed : .notInstalled
+    }
+
+    private func installCLI() {
+        guard let src = Bundle.main.url(forResource: "yatdl", withExtension: nil) else {
+            cliStatus = .failed; return
+        }
+        cliStatus = .installing
+        let srcPath = src.path
+        let script  = "do shell script \"install -m 755 \(srcPath) /usr/local/bin/yatdl\" with administrator privileges"
+        DispatchQueue.global(qos: .userInitiated).async {
+            var err: NSDictionary?
+            NSAppleScript(source: script)?.executeAndReturnError(&err)
+            DispatchQueue.main.async {
+                cliStatus = err == nil ? .installed : .failed
+            }
+        }
     }
 
     // MARK: – CSV export

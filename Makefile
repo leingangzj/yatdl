@@ -30,7 +30,7 @@ BUILD       = .build
 INSTALL_DIR = /usr/local/bin
 SWIFT_FLAGS = -O -target arm64-apple-macos14.0
 
-.PHONY: all app cli install install-app uninstall clean icon
+.PHONY: all app cli install install-app uninstall dmg clean icon
 
 all: app cli
 
@@ -38,12 +38,13 @@ all: app cli
 
 app: $(BUILD)/YATDL.app/Contents/MacOS/YATDL
 
-$(BUILD)/YATDL.app/Contents/MacOS/YATDL: $(APP_SRC)
+$(BUILD)/YATDL.app/Contents/MacOS/YATDL: $(APP_SRC) $(BUILD)/yatdl
 	@mkdir -p $(BUILD)/YATDL.app/Contents/MacOS
 	@mkdir -p $(BUILD)/YATDL.app/Contents/Resources
 	swiftc $(APP_SRC) $(APP_FRAMEWORKS) $(SWIFT_FLAGS) -o $(BUILD)/YATDL.app/Contents/MacOS/YATDL
 	@cp YATDL/Info.plist   $(BUILD)/YATDL.app/Contents/Info.plist
 	@cp YATDL/AppIcon.icns $(BUILD)/YATDL.app/Contents/Resources/AppIcon.icns
+	@cp $(BUILD)/yatdl     $(BUILD)/YATDL.app/Contents/Resources/yatdl
 	@echo "Built: $(BUILD)/YATDL.app"
 
 install-app: app
@@ -55,20 +56,32 @@ install-app: app
 
 # ── CLI ────────────────────────────────────────────────────────────────────
 
-cli: $(BUILD)/yatdl-cli
+cli: $(BUILD)/yatdl
 
-$(BUILD)/yatdl-cli: $(CLI_SRC)
+$(BUILD)/yatdl: $(CLI_SRC)
 	@mkdir -p $(BUILD)
-	swiftc $(CLI_SRC) $(SWIFT_FLAGS) -o $(BUILD)/yatdl-cli
-	@echo "Built: $(BUILD)/yatdl-cli"
+	swiftc $(CLI_SRC) $(SWIFT_FLAGS) -o $(BUILD)/yatdl
+	@echo "Built: $(BUILD)/yatdl"
 
 install: cli
-	install -m 755 $(BUILD)/yatdl-cli $(INSTALL_DIR)/yatdl-cli
-	@echo "Installed: $(INSTALL_DIR)/yatdl-cli"
+	sudo install -m 755 $(BUILD)/yatdl $(INSTALL_DIR)/yatdl
+	@echo "Installed: $(INSTALL_DIR)/yatdl"
 
 uninstall:
-	rm -f $(INSTALL_DIR)/yatdl-cli /Applications/YATDL.app
+	sudo rm -f $(INSTALL_DIR)/yatdl
+	rm -rf /Applications/YATDL.app
 	@echo "Uninstalled"
+
+# ── DMG distribution ───────────────────────────────────────────────────────
+
+dmg: app
+	@rm -rf $(BUILD)/dmg-stage $(BUILD)/YATDL.dmg
+	@mkdir -p "$(BUILD)/dmg-stage"
+	@cp -r "$(BUILD)/YATDL.app" "$(BUILD)/dmg-stage/YATDL.app"
+	@ln -sf /Applications "$(BUILD)/dmg-stage/Applications"
+	hdiutil create -volname "YATDL" -srcfolder "$(BUILD)/dmg-stage" -ov -format UDZO "$(BUILD)/YATDL.dmg"
+	@rm -rf "$(BUILD)/dmg-stage"
+	@echo "Created: $(BUILD)/YATDL.dmg"
 
 # ── Icon regeneration ──────────────────────────────────────────────────────
 

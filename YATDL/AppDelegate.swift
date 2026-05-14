@@ -88,12 +88,57 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func showAbout() {
         NSApp.activate(ignoringOtherApps: true)
-        let alert = NSAlert()
-        alert.messageText       = "YATDL"
-        alert.informativeText   = "Yet Another To-Do List\nVersion 1.1\n\nBy Zac Leingang\ngithub.com/leingangzj/yatdl\n\nReleased under the MIT License"
-        alert.alertStyle        = .informational
-        alert.icon              = NSImage(systemSymbolName: "bolt.circle.fill", accessibilityDescription: nil)
-        alert.addButton(withTitle: "OK")
-        alert.runModal()
+
+        let host = NSHostingController(rootView: AboutView())
+        host.sizingOptions = .preferredContentSize
+
+        let w = NSWindow(contentViewController: host)
+        w.title                      = ""
+        w.styleMask                  = [.titled, .closable]
+        w.titlebarAppearsTransparent = true
+        w.isReleasedWhenClosed       = true
+        w.center()
+        w.makeKeyAndOrderFront(nil)
+    }
+}
+
+// MARK: – About window content
+
+private struct AboutView: View {
+    var body: some View {
+        VStack(spacing: 8) {
+            Image(nsImage: NSImage(systemSymbolName: "bolt.circle.fill", accessibilityDescription: nil)
+                  ?? NSImage())
+                .resizable()
+                .frame(width: 64, height: 64)
+                .foregroundStyle(Color.accentColor)
+
+            Text("YATDL")
+                .font(.system(size: 18, weight: .semibold))
+
+            Text("Yet Another To-Do List")
+                .font(.system(size: 13))
+                .foregroundStyle(.secondary)
+
+            Text("Version 1.1")
+                .font(.system(size: 12))
+                .foregroundStyle(.secondary)
+
+            Divider().padding(.vertical, 4)
+
+            Text("By Zac Leingang")
+                .font(.system(size: 12))
+
+            Text("github.com/leingangzj/yatdl")
+                .font(.system(size: 11))
+                .foregroundStyle(.secondary)
+
+            Text("Released under the MIT License")
+                .font(.system(size: 11))
+                .foregroundStyle(.secondary)
+        }
+        .multilineTextAlignment(.center)
+        .padding(28)
+        .frame(width: 260)
     }
 }
