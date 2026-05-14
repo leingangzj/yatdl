@@ -1,154 +1,105 @@
 # YATDL — Yet Another To-Do List
 
-A lightweight, native macOS menubar to-do app with a full-screen terminal TUI companion. Built with SwiftUI + AppKit, arm64 native, targeting macOS 14+.
+A fast, native macOS menubar app for keeping your lists close without them getting in the way. No accounts, no sync services, no clutter — just your tasks, always a keystroke away.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
-## Install
+## Download
 
-Download **YATDL.dmg** from [Releases](https://github.com/leingangzj/yatdl/releases), open it, and drag YATDL into Applications.
-
-To install the `yatdl` CLI tool, open the app → right-click the menubar icon → **Settings → Install CLI Tool…** — macOS will ask for your password once.
+Grab the latest **YATDL.dmg** from [Releases](https://github.com/leingangzj/yatdl/releases), open it, and drag YATDL into your Applications folder. That's it.
 
 ---
 
-## Desktop App
+## The App
 
-### Drop-down panel
+### Lives in your menubar
 
-The panel drops directly below the menubar icon. Click the bolt icon or press **Option+Space** from anywhere.
+YATDL runs entirely from the menu bar — no Dock icon, no Cmd+Tab clutter. Click the bolt icon or press **Option+Space** from anywhere to open it.
 
 ![Drop-down panel](screenshots/gui-dropdown.png)
 
-### Slide-in panel
+It drops down right below the icon by default. Switch to **slide-in mode** and it glides in from the right edge of your screen, nudging your windows aside.
 
-Switch to slide-in mode from the bottom toolbar. The panel glides in from the right edge and nudges your windows aside. Hovering near the right edge opens it automatically.
+![Slide-in mode](screenshots/gui-slidein.png)
 
-![Slide-in panel](screenshots/gui-slidein.png)
+### Multiple lists, organized by sections
 
-### Multiple lists and sections
-
-Up to three lists (tabs), each divided into named sections. Tabs fill the panel width evenly and can be reordered by dragging.
+Keep up to three lists — Personal, Work, School, whatever fits. Each list can be broken into named sections so related tasks stay grouped together.
 
 ![Tabs and sections](screenshots/gui-tabs-sections.png)
 
-### Sections with emoji icons
+Tabs sit across the top of the panel and resize automatically. You can move them to the left side or bottom if that works better for you.
 
-Each item can carry an emoji icon. Sections show a green ✓ and strikethrough when every item in them is done.
+### Emoji icons on everything
+
+Every item can have an emoji icon. Hover a row and click the smiley face to pick one. Sections show a green ✓ and strikethrough automatically when every item in them is done.
 
 ![Work list with sections](screenshots/gui-worklist.png)
 
 ### Settings
 
-Control appearance, font sizes, tab position, launch at login, CLI install, and CSV export.
+Adjust font sizes, switch between light and dark mode, choose where tabs sit, and set the app to open at login. You can also export any list to CSV from here.
 
-![Settings](screenshots/gui-settings.png)
-
----
-
-## Features
-
-### Panel & Navigation
-
-| Feature | Detail |
-|---|---|
-| **Menubar-only** | No Dock icon, no Cmd+Tab entry |
-| **Global hotkey** | Option+Space opens or closes the panel from anywhere |
-| **Drop-down mode** | Panel drops below the menubar icon |
-| **Slide-in mode** | Panel slides in from the right edge and nudges windows aside |
-| **Hot-edge hover** | In slide-in mode, hovering near the right edge opens the panel |
-| **Pin mode** | Keep the panel open regardless of outside clicks |
-| **Appearance** | System, Light, or Dark — switchable in Settings |
-
-### Lists (Tabs)
-
-| Feature | Detail |
-|---|---|
-| **Up to 3 lists** | Create up to three named lists |
-| **Dynamic width** | Tabs fill the panel width evenly |
-| **Tab positions** | Top, Bottom, or Left sidebar |
-| **Inline create** | Click Add Tab — name it immediately in place |
-| **Rename** | Double-click or right-click → Rename |
-| **Icons** | Right-click → Set Icon to assign an emoji |
-| **Drag to reorder** | Drag tabs to rearrange |
-| **Delete with confirmation** | Right-click → Delete List shows a confirmation |
-
-### Sections
-
-| Feature | Detail |
-|---|---|
-| **Named sections** | Divide any list into sections |
-| **Inline create** | Click Add Section — name it immediately in place |
-| **Completion indicator** | Green ✓ and strikethrough when all items are done |
-| **Drag to reorder** | Drag section headers above, below, or between items |
-| **Delete** | Right-click → Delete Section; orphaned items fold into the first section |
-
-### Items
-
-| Feature | Detail |
-|---|---|
-| **Inline create** | Click Add Item — edit it immediately in place |
-| **Check/uncheck** | Click the circle to toggle done; strikethrough applied automatically |
-| **Inline edit** | Double-click any item to edit in place |
-| **Click-away saves** | Clicking anywhere outside an active edit commits the change |
-| **Icons** | Hover a row and click the smiley to assign an emoji |
-| **URL items** | Paste any http/https URL — single-click opens it in your browser |
-| **Delete** | Hover a row to reveal the × button |
-| **Drag to reorder** | Drag items within or between sections |
-
-### Settings
-
-| Feature | Detail |
-|---|---|
-| **Font size** | Adjustable item font size (11–20 pt) with live preview |
-| **Section font size** | Separate size for section headers (9–16 pt) |
-| **Appearance** | System / Light / Dark |
-| **Tab position** | Top / Left / Bottom |
-| **Launch at Login** | Registered with SMAppService |
-| **Install CLI Tool** | One-click install of the `yatdl` CLI with a native password prompt |
-| **CSV export** | Export current or all lists with List, Section, Item, Done, and Created At columns |
+![Settings window](screenshots/gui-settings.png)
 
 ---
 
-## Terminal TUI
+## Things worth knowing
 
-`yatdl -i` launches a full-screen terminal interface that reads and writes the same data file as the GUI — changes sync within milliseconds in both directions.
+- **Option+Space** opens and closes the panel from any app
+- **Pin mode** keeps the panel open even when you click elsewhere
+- **Hot-edge hover** — in slide-in mode, move your cursor to the right edge of the screen and the panel opens on its own
+- **URL items** — paste any link as a to-do item and click it to open in your browser
+- **Click-away saves** — editing a tab name, section, or item saves automatically when you click elsewhere
+- **Drag to reorder** — items, sections, and tabs are all draggable
+- **Deleting a list** shows a confirmation first
+- Runs fully offline, no account required
 
-### Personal list with sections
+---
 
-![TUI personal list](screenshots/tui-personal.png)
+## Terminal
 
-### Work list with multiple sections
+If you spend time in the terminal, there's a `yatdl` CLI that reads and writes the same file as the app. Changes show up in the GUI instantly.
+
+**To install it:** open the app, right-click the bolt icon → Settings → **Install CLI Tool…** — macOS will ask for your password once.
+
+### Full-screen TUI (`yatdl -i`)
+
+Arrow-key navigation, section management, emoji icons — everything from the GUI, in your terminal.
+
+![TUI with sections](screenshots/tui-personal.png)
 
 ![TUI work list](screenshots/tui-work.png)
 
-### One-shot commands
+### Quick commands
 
 ```
-yatdl                  show current list
+yatdl                  show your current list
 yatdl lists            show all lists
-yatdl use <name>       switch to a list
-yatdl add <text>       add item to current list
-yatdl done <num>       mark item done
-yatdl undo <num>       mark item not done
-yatdl rm <num>         remove item
-yatdl newtab <name>    create a new list
+yatdl use <name>       switch lists
+yatdl add <text>       add an item
+yatdl done <num>       mark done
+yatdl undo <num>       mark not done
+yatdl rm <num>         remove an item
+yatdl newtab <name>    create a list
 yatdl rmtab <name>     delete a list
-yatdl -i               launch full-screen TUI
-yatdl help             show help
+yatdl -i               open the TUI
+yatdl help             show all commands
 ```
 
-### TUI keys — on an item
+### TUI keys
 
-| Key | Action |
+**On an item:**
+
+| Key | What it does |
 |---|---|
-| ↑ ↓ / j k | navigate |
-| Space | toggle done |
+| ↑ ↓ / j k | move up and down |
+| Space | check / uncheck |
 | `a` | add item |
-| `e` | edit item text |
-| `i` | set emoji icon (blank to clear) |
+| `e` | edit item |
+| `i` | set emoji icon |
 | `d` | delete item |
 | `s` | add section |
 | Tab / → | next list |
@@ -156,88 +107,30 @@ yatdl help             show help
 | `n` | new list |
 | q / Esc | quit |
 
-### TUI keys — on a section header
+**On a section header:**
 
-| Key | Action |
+| Key | What it does |
 |---|---|
-| ↑ ↓ / j k | navigate |
 | `r` | rename section |
 | `d` | delete section |
 | `s` | add section |
-| Tab / → | next list |
-| q / Esc | quit |
 
 ---
 
-## Bidirectional Sync
+## Build from source
 
-Both the app and CLI read and write:
-
-```
-~/Library/Application Support/YATDL/data.json
-```
-
-The GUI watches that file with a **kqueue-backed DispatchSource** (no polling). Any change made in the CLI appears in the GUI within milliseconds.
-
----
-
-## Build from Source
-
-> Requires Swift toolchain: `xcode-select --install`
+Requires Swift command-line tools (`xcode-select --install`).
 
 ```bash
-# GUI app
-make app          # builds .build/YATDL.app
-make install-app  # installs to /Applications
-
-# CLI
-make install      # builds and installs yatdl to /usr/local/bin
-
-# Distributable DMG
-make dmg          # produces .build/YATDL.dmg
+make install-app   # build and install the GUI to /Applications
+make install       # build and install the yatdl CLI to /usr/local/bin
+make dmg           # create a distributable .dmg
 ```
-
----
-
-## Data Format
-
-```json
-{
-  "lists": [
-    {
-      "id": "…",
-      "name": "Personal",
-      "icon": "📋",
-      "sections": [
-        {
-          "id": "…",
-          "name": "Morning",
-          "items": [
-            { "id": "…", "text": "Drop off kids", "icon": "🚗", "isDone": false, "createdAt": "…" }
-          ]
-        }
-      ]
-    }
-  ],
-  "selectedListID": "…",
-  "displayMode": "dropFromMenubar",
-  "isPinned": false
-}
-```
-
----
-
-## Requirements
-
-- macOS 14.0 (Sonoma) or later
-- Apple Silicon (arm64)
 
 ---
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
-## Author
 
 **Zac Leingang** — leingangzj@gmail.com — [github.com/leingangzj/yatdl](https://github.com/leingangzj/yatdl)

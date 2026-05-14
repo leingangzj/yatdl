@@ -2,8 +2,7 @@
 // Author: Zac Leingang
 //
 // One-shot commands or a full-screen TUI (yatdl -i).
-// Reads and writes the same data file as the GUI app — changes sync
-// bidirectionally through the GUI's kqueue file watcher.
+// Reads and writes the same data file as the GUI app.
 
 import Foundation
 import Darwin
@@ -162,7 +161,7 @@ final class Store {
         return true
     }
 
-    // Appends to the last section (matches desktop app behaviour).
+    // New items go to the last section, same as the GUI.
     func addItem(_ text: String) {
         guard let id  = data.selectedListID,
               let idx = data.lists.firstIndex(where: { $0.id == id }) else { return }
@@ -229,7 +228,7 @@ final class Store {
         save()
     }
 
-    // Orphaned items fold into the first remaining section (matches desktop behaviour).
+    // Items in a deleted section fold into the first remaining one.
     func deleteSection(sectionIdx: Int) {
         guard let id   = data.selectedListID,
               let lidx = data.lists.firstIndex(where: { $0.id == id }),
