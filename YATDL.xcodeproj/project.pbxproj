@@ -19,6 +19,7 @@
 		A10000000000000000000015 /* FileWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* FileWatcher.swift */; };
 		A10000000000000000000017 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000016 /* HotkeyManager.swift */; };
 		A10000000000000000000019 /* PanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* PanelController.swift */; };
+		A100000000000000000000AB /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A100000000000000000000AA /* AppIcon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		A10000000000000000000016 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
 		A10000000000000000000018 /* PanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelController.swift; sourceTree = "<group>"; };
 		A1000000000000000000001A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A100000000000000000000AA /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				A10000000000000000000016 /* HotkeyManager.swift */,
 				A10000000000000000000018 /* PanelController.swift */,
 				A1000000000000000000001A /* Info.plist */,
+			A100000000000000000000AA /* AppIcon.icns */,
 			);
 			path = YATDL;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A100000000000000000000AB /* AppIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +221,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
+				ICON_FILE = AppIcon;
 				INFOPLIST_FILE = YATDL/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;

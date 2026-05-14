@@ -20,6 +20,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
 	<!-- Hides the app from the Dock at launch, before AppDelegate fires -->
 	<key>LSUIElement</key>
 	<true/>
