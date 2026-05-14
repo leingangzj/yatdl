@@ -19,4 +19,4 @@
 {"id":19,"feature":"Bidirectional GUI↔CLI sync via shared data file + file watcher","category":"cli","status":"done"}
 {"id":20,"feature":"arm64 native build (Xcode ARCHS=arm64, swiftc -target arm64-apple-macos14.0)","category":"build","status":"done"}
 {"id":21,"feature":"Git repository with Zac Leingang as sole author","category":"meta","status":"done"}
-{"id":22,"feature":"GitHub repository (public)","category":"meta","status":"pending"}
+{"id":22,"feature":"GitHub repository (public)","category":"meta","status":"done","url":"https://github.com/leingangzj/yatdl"}
