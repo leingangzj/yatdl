@@ -1,0 +1,271 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000003 /* YATDLApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* YATDLApp.swift */; };
+		A10000000000000000000005 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000004 /* AppDelegate.swift */; };
+		A10000000000000000000007 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000006 /* ContentView.swift */; };
+		A10000000000000000000009 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008 /* TabBarView.swift */; };
+		A1000000000000000000000B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000A /* TodoListView.swift */; };
+		A1000000000000000000000D /* BottomToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000C /* BottomToolbarView.swift */; };
+		A1000000000000000000000F /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000E /* TodoItem.swift */; };
+		A10000000000000000000011 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000010 /* TodoList.swift */; };
+		A10000000000000000000013 /* TodoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* TodoStore.swift */; };
+		A10000000000000000000015 /* FileWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* FileWatcher.swift */; };
+		A10000000000000000000017 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000016 /* HotkeyManager.swift */; };
+		A10000000000000000000019 /* PanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* PanelController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A10000000000000000000001 /* YATDL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YATDL.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000002 /* YATDLApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YATDLApp.swift; sourceTree = "<group>"; };
+		A10000000000000000000004 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A10000000000000000000006 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A10000000000000000000008 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		A1000000000000000000000A /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
+		A1000000000000000000000C /* BottomToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolbarView.swift; sourceTree = "<group>"; };
+		A1000000000000000000000E /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
+		A10000000000000000000010 /* TodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
+		A10000000000000000000012 /* TodoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoStore.swift; sourceTree = "<group>"; };
+		A10000000000000000000014 /* FileWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWatcher.swift; sourceTree = "<group>"; };
+		A10000000000000000000016 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
+		A10000000000000000000018 /* PanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelController.swift; sourceTree = "<group>"; };
+		A1000000000000000000001A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1000000000000000000001F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1000000000000000000001B /* = */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000000000000001C /* YATDL */,
+				A1000000000000000000001D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A1000000000000000000001C /* YATDL */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000002 /* YATDLApp.swift */,
+				A10000000000000000000004 /* AppDelegate.swift */,
+				A10000000000000000000006 /* ContentView.swift */,
+				A10000000000000000000008 /* TabBarView.swift */,
+				A1000000000000000000000A /* TodoListView.swift */,
+				A1000000000000000000000C /* BottomToolbarView.swift */,
+				A1000000000000000000000E /* TodoItem.swift */,
+				A10000000000000000000010 /* TodoList.swift */,
+				A10000000000000000000012 /* TodoStore.swift */,
+				A10000000000000000000014 /* FileWatcher.swift */,
+				A10000000000000000000016 /* HotkeyManager.swift */,
+				A10000000000000000000018 /* PanelController.swift */,
+				A1000000000000000000001A /* Info.plist */,
+			);
+			path = YATDL;
+			sourceTree = "<group>";
+		};
+		A1000000000000000000001D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000001 /* YATDL.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A10000000000000000000028 /* YATDL */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000022 /* Build configuration list for PBXNativeTarget "YATDL" */;
+			buildPhases = (
+				A1000000000000000000001E /* Sources */,
+				A1000000000000000000001F /* Frameworks */,
+				A10000000000000000000020 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YATDL;
+			productName = YATDL;
+			productReference = A10000000000000000000001 /* YATDL.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10000000000000000000027 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A10000000000000000000028 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = A10000000000000000000021 /* Build configuration list for PBXProject "YATDL" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A1000000000000000000001B;
+			productRefGroup = A1000000000000000000001D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10000000000000000000028 /* YATDL */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A10000000000000000000020 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1000000000000000000001E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000003 /* YATDLApp.swift in Sources */,
+				A10000000000000000000005 /* AppDelegate.swift in Sources */,
+				A10000000000000000000007 /* ContentView.swift in Sources */,
+				A10000000000000000000009 /* TabBarView.swift in Sources */,
+				A1000000000000000000000B /* TodoListView.swift in Sources */,
+				A1000000000000000000000D /* BottomToolbarView.swift in Sources */,
+				A1000000000000000000000F /* TodoItem.swift in Sources */,
+				A10000000000000000000011 /* TodoList.swift in Sources */,
+				A10000000000000000000013 /* TodoStore.swift in Sources */,
+				A10000000000000000000015 /* FileWatcher.swift in Sources */,
+				A10000000000000000000017 /* HotkeyManager.swift in Sources */,
+				A10000000000000000000019 /* PanelController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A10000000000000000000023 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A10000000000000000000024 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		A10000000000000000000025 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = YATDL/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zacleingang.yatdl;
+				PRODUCT_NAME = YATDL;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A10000000000000000000026 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = YATDL/Info.plist;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zacleingang.yatdl;
+				PRODUCT_NAME = YATDL;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10000000000000000000021 /* Build configuration list for PBXProject "YATDL" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000000000000000000023 /* Debug */,
+				A10000000000000000000024 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000022 /* Build configuration list for PBXNativeTarget "YATDL" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000000000000000000025 /* Debug */,
+				A10000000000000000000026 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A10000000000000000000027 /* Project object */;
+}
