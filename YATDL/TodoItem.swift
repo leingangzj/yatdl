@@ -6,6 +6,7 @@ import Foundation
 struct TodoItem: Identifiable, Codable, Equatable {
     var id        = UUID()
     var text:     String
-    var isDone:   Bool = false
-    var createdAt: Date = Date()
+    var icon:     String = ""
+    var isDone:   Bool   = false
+    var createdAt: Date  = Date()
 }

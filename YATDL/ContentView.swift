@@ -4,25 +4,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var store: TodoStore
+    @EnvironmentObject var store:  TodoStore
+    @EnvironmentObject var action: PanelAction
 
     var body: some View {
         VStack(spacing: 0) {
             TabBarView()
             Divider()
-            // Drive the list view off the index so the binding propagates
-            // writes back into the store array rather than a copied value.
             if let idx = store.lists.firstIndex(where: { $0.id == store.selectedListID }) {
                 TodoListView(list: $store.lists[idx])
+                    .frame(maxHeight: .infinity)
             }
             Divider()
             BottomToolbarView()
         }
-        .frame(width: PanelController.width, height: PanelController.height)
+        // Width is fixed; height is driven by the panel (drop=480, slide=full screen)
+        .frame(width: PanelController.width)
         .background {
             RoundedRectangle(cornerRadius: 12)
                 .fill(.regularMaterial)
         }
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        // Escape key hides the panel (routed back via PanelAction)
+        .onExitCommand { action.hidePanel?() }
     }
 }

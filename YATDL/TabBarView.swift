@@ -65,20 +65,52 @@ struct TabBarView: View {
 struct TabChip: View {
     @EnvironmentObject var store: TodoStore
     let list: TodoList
+    @State private var showingPicker = false
+
     var isSelected: Bool { store.selectedListID == list.id }
 
     var body: some View {
         Button { store.selectedListID = list.id } label: {
-            Text(list.name)
-                .font(.system(size: 12, weight: isSelected ? .semibold : .regular))
-                .foregroundStyle(isSelected ? .primary : .secondary)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .background(
-                    isSelected ? Color.accentColor.opacity(0.18) : .clear,
-                    in: RoundedRectangle(cornerRadius: 6)
-                )
+            HStack(spacing: 3) {
+                if !list.icon.isEmpty {
+                    Text(list.icon).font(.system(size: 11))
+                }
+                Text(list.name)
+                    .font(.system(size: 12, weight: isSelected ? .semibold : .regular))
+                    .foregroundStyle(isSelected ? .primary : .secondary)
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(
+                isSelected ? Color.accentColor.opacity(0.18) : .clear,
+                in: RoundedRectangle(cornerRadius: 6)
+            )
         }
         .buttonStyle(.plain)
+        .popover(isPresented: $showingPicker, arrowEdge: .bottom) {
+            EmojiPickerView { emoji in
+                if let idx = store.lists.firstIndex(where: { $0.id == list.id }) {
+                    store.lists[idx].icon = emoji
+                    store.save()
+                }
+                showingPicker = false
+            }
+        }
+        .contextMenu {
+            Button("Set Icon…") { showingPicker = true }
+            if store.lists.count > 1 {
+                Divider()
+                Button("Delete List", role: .destructive) { deleteList() }
+            }
+        }
+    }
+
+    private func deleteList() {
+        guard let idx = store.lists.firstIndex(where: { $0.id == list.id }) else { return }
+        store.lists.remove(at: idx)
+        if !store.lists.contains(where: { $0.id == store.selectedListID }) {
+            store.selectedListID = store.lists[max(0, idx - 1)].id
+        }
+        store.save()
     }
 }

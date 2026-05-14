@@ -9,8 +9,10 @@ APP_SRC = \
 	YATDL/TodoStore.swift \
 	YATDL/FileWatcher.swift \
 	YATDL/HotkeyManager.swift \
+	YATDL/PanelAction.swift \
 	YATDL/PanelController.swift \
 	YATDL/ContentView.swift \
+	YATDL/EmojiPickerView.swift \
 	YATDL/TabBarView.swift \
 	YATDL/TodoListView.swift \
 	YATDL/BottomToolbarView.swift
@@ -51,19 +53,19 @@ install-app: app
 
 # ── CLI ────────────────────────────────────────────────────────────────────
 
-cli: $(BUILD)/yatdl
+cli: $(BUILD)/yatdl-cli
 
-$(BUILD)/yatdl: $(CLI_SRC)
+$(BUILD)/yatdl-cli: $(CLI_SRC)
 	@mkdir -p $(BUILD)
-	swiftc $(CLI_SRC) $(SWIFT_FLAGS) -o $(BUILD)/yatdl
-	@echo "Built: $(BUILD)/yatdl"
+	swiftc $(CLI_SRC) $(SWIFT_FLAGS) -o $(BUILD)/yatdl-cli
+	@echo "Built: $(BUILD)/yatdl-cli"
 
 install: cli
-	install -m 755 $(BUILD)/yatdl $(INSTALL_DIR)/yatdl
-	@echo "Installed: $(INSTALL_DIR)/yatdl"
+	install -m 755 $(BUILD)/yatdl-cli $(INSTALL_DIR)/yatdl-cli
+	@echo "Installed: $(INSTALL_DIR)/yatdl-cli"
 
 uninstall:
-	rm -f $(INSTALL_DIR)/yatdl /Applications/YATDL.app
+	rm -f $(INSTALL_DIR)/yatdl-cli /Applications/YATDL.app
 	@echo "Uninstalled"
 
 # ── Icon regeneration ──────────────────────────────────────────────────────

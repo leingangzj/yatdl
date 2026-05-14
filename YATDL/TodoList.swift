@@ -6,5 +6,6 @@ import Foundation
 struct TodoList: Identifiable, Codable {
     var id    = UUID()
     var name:  String
+    var icon:  String     = ""
     var items: [TodoItem] = []
 }

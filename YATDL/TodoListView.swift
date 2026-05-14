@@ -52,9 +52,10 @@ struct TodoItemRow: View {
     @Binding var item: TodoItem
     let onDelete: () -> Void
 
-    @State private var isHovered = false
-    @State private var isEditing = false
-    @State private var draft     = ""
+    @State private var isHovered        = false
+    @State private var isEditing        = false
+    @State private var draft            = ""
+    @State private var showingIconPicker = false
 
     var body: some View {
         HStack(spacing: 8) {
@@ -67,6 +68,11 @@ struct TodoItemRow: View {
                     .foregroundStyle(item.isDone ? Color.accentColor : .secondary)
             }
             .buttonStyle(.plain)
+
+            if !item.icon.isEmpty {
+                Text(item.icon)
+                    .font(.system(size: 13))
+            }
 
             if isEditing {
                 TextField("", text: $draft)
@@ -81,11 +87,26 @@ struct TodoItemRow: View {
                     .foregroundStyle(item.isDone ? .secondary : .primary)
                     .strikethrough(item.isDone, color: .secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    // Double-click to edit, matching standard macOS convention
                     .onTapGesture(count: 2) { isEditing = true }
             }
 
             if isHovered && !isEditing {
+                Button {
+                    showingIconPicker = true
+                } label: {
+                    Image(systemName: item.icon.isEmpty ? "face.smiling" : "face.smiling.fill")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .popover(isPresented: $showingIconPicker, arrowEdge: .bottom) {
+                    EmojiPickerView { emoji in
+                        item.icon = emoji
+                        store.save()
+                        showingIconPicker = false
+                    }
+                }
+
                 Button(action: onDelete) {
                     Image(systemName: "xmark")
                         .font(.system(size: 10, weight: .medium))
