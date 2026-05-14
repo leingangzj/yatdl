@@ -43,7 +43,10 @@ $(BUILD)/YATDL.app/Contents/MacOS/YATDL: $(APP_SRC)
 	@echo "Built: $(BUILD)/YATDL.app"
 
 install-app: app
+	rm -rf /Applications/YATDL.app
 	cp -r $(BUILD)/YATDL.app /Applications/YATDL.app
+	codesign --force --deep --sign - /Applications/YATDL.app
+	xattr -cr /Applications/YATDL.app
 	@echo "Installed: /Applications/YATDL.app"
 
 # ── CLI ────────────────────────────────────────────────────────────────────
