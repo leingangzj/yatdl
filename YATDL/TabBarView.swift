@@ -48,7 +48,7 @@ struct TabBarView: View {
     private func commit() {
         let name = newTabName.trimmingCharacters(in: .whitespaces)
         guard !name.isEmpty else { cancel(); return }
-        var list = TodoList(name: name)
+        let list = TodoList(name: name)
         store.lists.append(list)
         store.selectedListID = list.id
         newTabName  = ""

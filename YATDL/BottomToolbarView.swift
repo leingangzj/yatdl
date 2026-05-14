@@ -36,7 +36,7 @@ struct BottomToolbarView: View {
             Button(action: { store.isPinned.toggle() }) {
                 Image(systemName: store.isPinned ? "pin.fill" : "pin")
                     .font(.system(size: 12))
-                    .foregroundStyle(store.isPinned ? .accentColor : .secondary)
+                    .foregroundStyle(store.isPinned ? Color.accentColor : Color.secondary)
             }
             .buttonStyle(.plain)
             .help(store.isPinned ? "Unpin window" : "Pin window (keep visible)")
