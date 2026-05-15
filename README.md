@@ -6,9 +6,19 @@ A fast, native macOS menubar app for keeping your lists close without them getti
 
 ---
 
-## Download
+## Install
 
-Grab the latest **YATDL.dmg** from [Releases](https://github.com/leingangzj/yatdl/releases), open it, and drag YATDL into your Applications folder. That's it.
+**Homebrew (recommended):**
+
+```bash
+brew install --cask leingangzj/yatdl/yatdl
+```
+
+Installs the app and the `yatdl` CLI tool in one step. Uninstall with `brew uninstall --cask yatdl`.
+
+**Manual:**
+
+Grab the latest **YATDL.dmg** from [Releases](https://github.com/leingangzj/yatdl/releases), open it, and drag YATDL into your Applications folder. Then open the app → right-click the bolt icon → Settings → **Install CLI Tool…** to get the `yatdl` terminal command.
 
 ---
 
